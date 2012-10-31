@@ -9,7 +9,7 @@ enyo.kind({
 	},
 	components:[
 		//{kind:"EventRecorder", name:"recorder", src:"assets/events.json", components: [
-			{kind:"Panels", index:0, draggable:false, classes:"enyo-fit panels-shadow", arrangerKind:"PeekArranger", components: [
+			{kind:"Panels", index:0, draggable:true, classes:"enyo-fit panels-shadow", arrangerKind:"PeekArranger", components: [
 				{kind:"CategoryListPanel", peekWidth:180, style:"width:280px;"},
 				{kind:"AppListPanel", peekWidth:86},
 				{kind:"AppDetailPanel", peekWidth:100},
@@ -47,11 +47,11 @@ enyo.kind({
 				{style:"display:inline-block; color:white;", name:"category"}
 			]}
 		]},
-		{kind:"PanelDragDecorator", components: [
+		//{kind:"PanelDragDecorator", components: [
 			{kind:"onyx.Toolbar", components: [
 				{kind:"onyx.Grabber", ontap:"doPrev"}
 			]}
-		]}
+		//]}
 	],
 	data: ["Bookmarked Apps", "All Apps", "Books", "Business", "Education", "Entertainment", "Finance", "Food", "Games", "Health & Fitness", "Lifestyle", "Music", "Navigation", "News", "Photography", "Productivity Information"],
 	create: function() {
@@ -92,11 +92,11 @@ enyo.kind({
 				]}
 			]}
 		]},
-		{kind:"PanelDragDecorator", components: [
+		//{kind:"PanelDragDecorator", components: [
 			{kind:"onyx.Toolbar", components: [
 				{kind:"onyx.Grabber", ontap:"doPrev"}
 			]}
-		]}
+		//]}
 	],
 	data: ["Bookmarked Apps", "All Apps", "Books", "Business", "Education", "Entertainment", "Finance", "Food", "Games", "Health & Fitness", "Lifestyle", "Music", "Navigation", "News", "Photography", "Productivity Information"],
 	create: function() {
@@ -154,82 +154,12 @@ enyo.kind({
 				{style:"; font-size:12px;", content:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"}
 			]}
 		]},
-		{kind:"PanelDragDecorator", components: [
+		//{kind:"PanelDragDecorator", components: [
 			{kind:"onyx.Toolbar", components: [
 				{kind:"onyx.Grabber", ontap:"doPrev"}
 			]}
-		]}
+		//]}
 	]
-});
-
-enyo.kind({
-	name: "PeekArranger",
-	kind: "CarouselArranger",
-	//* @protected
-	size: function() {
-		this.inherited(arguments);
-	},
-	arrange: function(inC, inIndex) {
-		var c$ = this.container.getPanels();
-		for (var i=0, c; (c=c$[i]); i++) {
-			var lpad = this.containerPadding.left;
-			var width = this.containerBounds.width;
-			if (inIndex == 0) {
-				if (i == 0) {
-					// Right-aligned
-					left = width-c.width;
-				} else {
-					// Off-screen
-					left = width;
-				}
-			} else {
-				if (i < inIndex) {
-					// Left aligned
-					left = lpad;
-				} else if ((i == inIndex) && !enyo.Panels.isScreenNarrow()) {
-					// Left with peek
-					left = lpad + c$[i-1].peekWidth;
-				} else {
-					// Off-screen
-					left = width;
-				}
-			}
-			this.arrangeControl(c, {left: left});
-		}
-	},
-	calcArrangementDifference: function(inI0, inA0, inI1, inA1) {
-		var diff = Math.abs(inA1[inI0].left - inA0[inI0].left);
-		return diff;
-	},
-	flowControl: function(inControl, inA) {
-		this.inherited(arguments);
-		if (this.container.realtimeFit) {
-			var c$ = this.container.getPanels();
-			var fit = c$[this.container.index];
-			if (inControl == fit && this.container.index > 0) {
-				this.fitControl(inControl, inA.left);
-			}
-		}
-		
-	},
-	finish: function() {
-		this.inherited(arguments);
-		if (!this.container.realtimeFit && this.containerBounds) {
-			var c$ = this.container.getPanels();
-			var a$ = this.container.arrangement;
-			var i = this.container.index;
-			var curr = c$[i];
-			var next = c$[i+1];
-			this.fitControl(curr, this.containerBounds.width - a$[i].left);
-			if (next) {
-				this.fitControl(next, this.containerBounds.width - c$[i].peekWidth);
-			}
-		}
-	},
-	fitControl: function(inControl, inWidth) {
-		inControl.applyStyle("width", inWidth + "px");
-		inControl.resized();
-	}
 });
 
 enyo.kind({
@@ -237,10 +167,10 @@ enyo.kind({
 	kind:"FittableRows", 
 	components: [
 		{fit:true, style:"background:white; padding:20px;", name:"client"},
-		{kind:"PanelDragDecorator", components: [
+		//{kind:"PanelDragDecorator", components: [
 			{kind:"onyx.Toolbar", components: [
 				{kind:"onyx.Grabber"}
 			]}
-		]}
+		//]}
 	]
 });
